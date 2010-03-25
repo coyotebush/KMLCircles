@@ -2,11 +2,7 @@
 
 use warnings;
 use strict;
-use Math::Trig 'deg2rad';
-use Math::Trig 'rad2deg';
-use Math::Trig 'pi2';
-use Math::Trig 'pi';
-use Math::Trig 'great_circle_destination';
+use Math::Trig qw(deg2rad rad2deg pi pi2 great_circle_destination);
 use Getopt::Std 'getopts';
 use Pod::Usage 'pod2usage';
 
@@ -99,7 +95,7 @@ EndOfTheEnd
 
 =head1 NAME
 
-kmlcircles - draws circles around waypoints in KML
+kmlcircles - draw circles around waypoints
 
 =head1 SYNOPSIS
 
@@ -141,7 +137,7 @@ data from. If none are specified, standard input will be used.
 
 CSV format is expected to contain each waypoint on a line
 with commas separating the latitude, longitude, and name, in that order.
-Latitude and Longitude are expected to be in decimal degree format.
+Latitude and longitude are expected to be in decimal degree format.
 
 =head1 SEE ALSO
 
