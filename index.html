@@ -1,0 +1,45 @@
+<html>
+<meta name="keywords" content="circle, circles, radius, location, waypoint, geocaching, geocache, google earth, kml, 528, tenth, feet, miles, color">
+<head><title>KML Circles</title></head>
+<body>
+<h1>KML Circles</h1>
+<p>This program reads waypoints in CSV format and writes a KML file containing
+circles surrounding the waypoints at a specified distance.</p>
+<p>A <a href="kmlcircles.pl">command-line version</a> of the Perl script
+is also available.</p>
+<form action="circles.pl" method="post">
+<fieldset><legend>Enter waypoints in CSV format below:</legend>
+<textarea name="data" cols="40" rows="10">
+48.8583, 2.2945, Eiffel Tower
+</textarea>
+</fieldset>
+<fieldset><legend>Options</legend>
+<label for="radius">Radius, in miles
+<input type="text" name="r" id="radius" size="4" maxlength="4" value="0.1"></label>
+<label for="color">Color
+<select name="c" id="color">
+	<option value="ff0000" selected>Red</option>
+	<option value="00ff00">Green</option>
+	<option value="0000ff">Blue</option>
+	<option value="ffff00">Yellow</option>
+	<option value="00ffff">Cyan</option>
+	<option value="ff00ff">Magenta</option>
+	<option value="000000">Black</option>
+	<option value="ffffff">White</option>
+</select>
+</label>
+<label for="alpha">Opacity
+<select name="a" id="alpha">
+	<option value="00">Transparent</option>
+	<option value="44">20%</option>
+	<option value="66">40%</option>
+	<option value="99" selected>60%</option>
+	<option value="cc">80%</option>
+	<option value="ff">Opaque</option>
+</select>
+</label>
+</fieldset>
+<p><input type="submit" value="Generate KML"></p>
+</form>
+</body>
+</html>
