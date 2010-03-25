@@ -1,0 +1,51 @@
+=head1 NAME
+
+kmlcircles - draws circles around waypoints in KML
+
+=head1 SYNOPSIS
+
+kmlcircles [-a alpha] [-c color] [-r radius] -o outfile [infile...]
+
+=head1 DESCRIPTION
+
+This program reads waypoints in CSV format and writes a KML file containing
+circles surrounding the waypoints at a specified distance.
+
+=head1 OPTIONS
+
+=over
+
+=item -o outfile
+
+KML filename to write to.
+
+=item -a alpha
+
+Alpha value for the circle fill, expressed as two hexadecimal digits from
+00 (transparent) to ff (opaque). Default: 99.
+
+=item -c color
+
+Color for the circle fill and border, expressed in RGB using 6 hexadecimal
+digits. Default: ff0000 (red).
+
+=item -r radius
+
+Radius for the circles, in miles. Default: 0.1.
+
+=back
+
+=head1 ARGUMENTS
+
+Any other arguments given on the command line are taken as filenames to read CSV
+data from. If none are specified, standard input will be used.
+
+CSV format is expected to contain each waypoint on a line
+with commas separating the latitude, longitude, and name, in that order.
+Latitude and Longitude are expected to be in decimal degree format.
+
+=head1 SEE ALSO
+
+L<Math::Trig>
+
+=cut
