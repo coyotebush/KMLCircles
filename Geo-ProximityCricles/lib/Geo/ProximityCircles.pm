@@ -8,6 +8,9 @@ use Math::Trig qw(deg2rad rad2deg pi pi2 great_circle_destination);
 use Geo::GoogleEarth::Pluggable;
 use Geo::Gpx;
 
+use constant ANGLESTEP   => pi/10;     # in radians
+use constant EARTHRADIUS => 3963.1676; # in miles
+
 =head1 NAME
 
 Geo::ProximityCircles - generate circles around waypoints
@@ -17,7 +20,7 @@ Geo::ProximityCircles - generate circles around waypoints
   use Geo::ProximityCircles;
   open (my $gpx, '<', 'data.gpx');
   open (my $kml, '>', 'circles.kml');
-  my $circles = new Geo::ProximityCircles(input => $gpx,
+  my $circles = new Geo::ProximityCircles(read => $gpx,
                                           color => 'ff0000'); # Red
   print $kml $circles->kml->render;
 
@@ -54,9 +57,33 @@ our @EXPORT = qw(
 
 our $VERSION = '0.01';
 
+=item * new
+
+Options may be passed to set attributes as with the accessor methods.
+
+  my $circles = new Geo::ProximityCircles(
+  	color => {red => 0, green => 255, blue => 0, alpha => 153},
+  	radius => 0.2
+  };
+
+=cut
+
 sub new {
-	
+	my $class = shift;
+	# Default values
+	my $self = {
+		_radius => 0.1,
+		_kml => Geo::GoogleEarth::Pluggable->new(name => 'ProximityCircles'),
+	};
+	bless $self, $class;
+	$self->color('990000ff');
+	my %params = @_;
+	for my $attrib (keys %params) {
+		$self->$attrib ($params{$attrib}) if $self->can($attrib);
+    }
+    return $self;
 }
+
 =item * read($fh)
 
 Loads waypoints from a GPX file.
@@ -67,7 +94,12 @@ Loads waypoints from a GPX file.
 =cut
 
 sub read {
-	
+	my $self = shift;
+	my $fh = shift;
+	my $gpx = Geo::Gpx->new(input => $fh);
+	for my $wpt ($gpx->waypoints()) {
+		$self->_add($wpt->{lat}, $wpt->{lon}, $wpt->{name});
+	}
 }
 
 =item * color( [new_color] )
@@ -87,6 +119,47 @@ sub color {
 		$self->{'color'} = reverse($newval) ;
 	}
 	return $self->{'color'};
+}
+
+sub kml {
+	my $self = shift;
+	return $self->_kml->render;
+}
+
+sub kmz {
+	my $self = shift;
+	return $self->_kml->archive;
+}
+
+sub kml_header {
+	my $self = shift;
+	return $self->_kml->header_kml;
+}
+
+sub kmz_header {
+	my $self = shift;
+	return $self->_kml->header_kmz;
+}
+
+# Add a circle
+sub _add {
+	my ($self, $lat, $lon, $name) = @_;
+	my $angle = 0;
+	my $theta = deg2rad($lon);
+	my $phi = deg2rad(90 - $lat);
+	my @points = ();
+	do
+	{
+		# Project a waypoint
+		$angle += ANGLESTEP;
+		my ($thetad, $phid, $dird) = great_circle_destination
+			($theta, $phi, $angle, $self->{_radius});
+		push(@points, [rad2deg($phid), rad2deg($thetad), 0]);
+	} while ($angle <= pi2);
+	$self-_kml->LineString(
+		name => $name,
+		coordinates => @points,
+		style => $self->_style);
 }
 
 
