@@ -8,6 +8,31 @@ use Math::Trig qw(deg2rad rad2deg pi pi2 great_circle_destination);
 use Geo::GoogleEarth::Pluggable;
 use Geo::Gpx;
 
+=head1 NAME
+
+Geo::ProximityCircles - generate circles around waypoints
+
+=head1 SYNOPSIS
+
+  use Geo::ProximityCircles;
+  open (my $gpx, '<', 'data.gpx');
+  open (my $kml, '>', 'circles.kml');
+  my $circles = new Geo::ProximityCircles(input => $gpx,
+                                          color => 'ff0000'); # Red
+  print $kml $circles->kml->render;
+
+=head1 DESCRIPTION
+
+Given a set of waypoints, a Google Earth file can be written containing circles
+that surround said waypoints. This is useful to visualize proximity
+restrictions, for instance in geocaching (L<http://www.geocaching.com/>).
+
+=head1 MEMBERS
+
+=over 4
+
+=cut
+
 #our @ISA = qw(Exporter);
 
 # Items to export into callers namespace by default. Note: do not export
@@ -29,28 +54,77 @@ our @EXPORT = qw(
 
 our $VERSION = '0.01';
 
+sub new {
+	
+}
+=item * read($fh)
+
+Loads waypoints from a GPX file.
+
+  open($gpx, '<', 'wpts.gpx')
+  $circles->read($gpx);
+
+=cut
+
+sub read {
+	
+}
+
+=item * color( [new_color] )
+
+Circle color, as accepted by L<Geo::GoogleEarth::Pluggable::Style/color>.
+
+  $circles->color('9900ff00');
+  $circles->color({red => 0, green => 255, blue => 0, alpha => 153});
+  $circles->color # => '9900ff00'
+
+=cut
+
+sub color {
+	my $self = shift;
+	my $newval = shift;
+	if (defined $newval) {
+		$self->{'color'} = reverse($newval) ;
+	}
+	return $self->{'color'};
+}
+
+
+#	
+#for my $attr ( @META, @ATTR ) {
+#    no strict 'refs';
+#    $attr = sub {
+#      my $self = shift;
+#      $self->{$attr} = shift if @_;
+#      return $self->{$attr};
+#    };
+#  }
 
 # Preloaded methods go here.
 
 1;
 __END__
-# Below is stub documentation for your module. You'd better edit it!
 
-=head1 NAME
 
-Geo::ProximityCircles - generate circles around waypoints
+=item * kml
 
-=head1 SYNOPSIS
+Access to the L<Geo::GoogleEarth::Pluggable> document.
 
-  use Geo::ProximityCircles;
-  blah blah blah
+Get KML
 
-=head1 DESCRIPTION
+  $circles->kml->render;
 
-Given a set of waypoints, a Google Earth file can be written containing circles
-that surround said waypoints. This is useful to visualize proximity
-restrictions, for instance in geocaching (L<http://www.geocaching.com/>).
+Get KMZ
 
+  $circles->kml->archive;
+
+Print KML HTTP header
+
+  $circles->kml->header;
+
+Print KMZ HTTP header
+
+  $circles->kml->header_kmz;
 
 =head1 HISTORY
 
@@ -58,10 +132,7 @@ restrictions, for instance in geocaching (L<http://www.geocaching.com/>).
 
 =item 0.01
 
-Original version; created by h2xs 1.23 with options
-
-  -ACX
-	Geo::ProximityCircles
+Original version
 
 =back
 
