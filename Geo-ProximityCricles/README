@@ -26,9 +26,8 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
   Math::Trig
-  GPS::Babel
-  Geo::GoogleEarth::Document
-  Geo::GoogleEarth::Document::modules2
+  Geo::Gpx
+  Geo::GoogleEarth::Pluggable;
 
 COPYRIGHT AND LICENCE
 

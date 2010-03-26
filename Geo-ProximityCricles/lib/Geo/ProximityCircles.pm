@@ -5,8 +5,8 @@ use strict;
 use warnings;
 
 use Math::Trig qw(deg2rad rad2deg pi pi2 great_circle_destination);
-use Geo::GoogleEarth::Document;
-use Geo::GoogleEarth::Document::Polygon;
+use Geo::GoogleEarth::Pluggable;
+use Geo::Gpx;
 
 #our @ISA = qw(Exporter);
 
