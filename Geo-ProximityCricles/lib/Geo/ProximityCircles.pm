@@ -126,11 +126,13 @@ Print KMZ HTTP header
 
   $circles->kml->header_kmz;
 
+=back
+
 =head1 HISTORY
 
 =over 8
 
-=item 0.01
+=item * 0.01
 
 Original version
 
