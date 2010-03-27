@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 7;
+use Test::More tests => 8;
 BEGIN { use_ok('Geo::ProximityCircles') };
 
 #########################
@@ -14,19 +14,25 @@ BEGIN { use_ok('Geo::ProximityCircles') };
 # its man page ( perldoc Test::More ) for help writing this test script.
 
 # Test the default constructor
-my $d = new Geo::ProximityCircles;
-is ($d->color,  '9900ff00', 'default color');
-is ($d->radius, 0.1,        'default radius');
+my $x = new Geo::ProximityCircles;
+is ($x->color,  '990000ff', 'default color');
+is ($x->radius, 0.1,        'default radius');
+undef $x;
 
 # Test constructor with arguments
 my $x = new Geo::ProximityCircles (color => '00000000', radius => 0.2);
 is ($x->color,  '00000000', 'custom constructor color');
 is ($x->radius, 0.2,        'custom constructor radius');
 
-# Test independently setting parameters
-my $x->color({red => 55});
-is ($x->color, {red => 55}, 'custom color hash');
+# Test independently setting and getting parameters
+$x->color({red => 55});
+is_deeply ($x->color, {red => 55}, 'custom color hash');
 
-my $x->radius(0.23);
+$x->radius(0.23);
 is ($x->radius, 0.23, 'custom radius');
+
+# Test that color is included properly in output
+my $color = {red => 122, green => 34, blue => 91, alpha => 201};
+$x->color($color);
+like($x->kml, qr/c95b227a/i, "hex color in KML");
 

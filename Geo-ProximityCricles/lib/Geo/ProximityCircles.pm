@@ -116,29 +116,51 @@ sub color {
 	my $self = shift;
 	my $newval = shift;
 	if (defined $newval) {
-		$self->{'color'} = reverse($newval) ;
+		if (defined $self->{'_style'}) {
+			$self->{'_style'}->{'PolyStyle'}->{'color'} = $newval;
+		} else {
+			$self->{'_style'} = $self->{'_kml'}->PolyStyle (color => $newval);
+		}
 	}
-	return $self->{'color'};
+	return $self->{'_style'}->{'PolyStyle'}->{'color'};
+}
+
+=item radius( [new_radius] )
+
+Circle radius, in miles.
+
+  $circles->radius(0.23);
+  $circles->radius; # => 0.23;
+
+=cut
+
+sub radius {
+	my $self = shift;
+	my $newval = shift;
+	if (defined $newval) {
+		$self->{'_radius'} = $newval;
+	}
+	return $self->{'_radius'};
 }
 
 sub kml {
 	my $self = shift;
-	return $self->_kml->render;
+	return $self->{'_kml'}->render;
 }
 
 sub kmz {
 	my $self = shift;
-	return $self->_kml->archive;
+	return $self->{'_kml'}->archive;
 }
 
 sub kml_header {
 	my $self = shift;
-	return $self->_kml->header_kml;
+	return $self->{'_kml'}->header_kml;
 }
 
 sub kmz_header {
 	my $self = shift;
-	return $self->_kml->header_kmz;
+	return $self->{'_kml'}->header_kmz;
 }
 
 # Add a circle
