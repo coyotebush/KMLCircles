@@ -151,18 +151,18 @@ sub _add {
 	my $theta = deg2rad($lon);
 	my $phi = deg2rad(90 - $lat);
 	my @points = ();
-	do
-	{
+	do {
 		# Project a waypoint
 		$angle += ANGLESTEP;
 		my ($thetad, $phid, $dird) = great_circle_destination
 			($theta, $phi, $angle, $self->{_radius});
 		push(@points, [rad2deg($phid), rad2deg($thetad), 0]);
 	} while ($angle <= pi2);
-	$self-_kml->LineString(
+	$self->{'_kml'}->LinearRing(
 		name => $name,
-		coordinates => @points,
-		style => $self->_style);
+		coordinates => \@points,
+		style => $self->{'_style'}
+	);
 }
 
 
