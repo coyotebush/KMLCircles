@@ -165,19 +165,6 @@ sub _add {
 	);
 }
 
-
-#	
-#for my $attr ( @META, @ATTR ) {
-#    no strict 'refs';
-#    $attr = sub {
-#      my $self = shift;
-#      $self->{$attr} = shift if @_;
-#      return $self->{$attr};
-#    };
-#  }
-
-# Preloaded methods go here.
-
 1;
 __END__
 
