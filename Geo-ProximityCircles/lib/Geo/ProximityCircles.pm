@@ -106,7 +106,7 @@ sub color {
 	return $self->{'_style'}->{'PolyStyle'}->{'color'};
 }
 
-=item radius( [new_radius] )
+=item * radius( [new_radius] )
 
 Circle radius, in miles.
 
@@ -124,24 +124,34 @@ sub radius {
 	return $self->{'_radius'}*EARTHRADIUS;
 }
 
-sub kml {
-	my $self = shift;
-	return $self->{'_kml'}->render;
-}
+=item * render
 
-sub kmz {
-	my $self = shift;
-	return $self->{'_kml'}->archive;
-}
+Render KML to a string.
 
-sub kml_header {
-	my $self = shift;
-	return $self->{'_kml'}->header_kml;
-}
+Available options: 'zip' to get zipped (KMZ) output, 'header' to include
+appropriate HTTP headers.
 
-sub kmz_header {
+  print $circles->render;
+  print $circles->render(zip => 1, header => 1); # in a CGI script, perhaps
+
+=cut
+
+sub render {
 	my $self = shift;
-	return $self->{'_kml'}->header_kmz;
+	my %options = @_;
+	if (defined $options{'zip'} and $options{'zip'}) {
+		if (defined $options{'header'} and $options{'header'}) {
+			return $self->{'_kml'}->header_kmz . $self->{'_kml'}->archive;
+		} else {
+			return $self->{'_kml'}->archive;
+		}
+	} else {
+		if (defined $options{'header'} and $options{'header'}) {
+			return $self->{'_kml'}->header_kml . $self->{'_kml'}->render;
+		} else {
+			return $self->{'_kml'}->render;
+		}
+	}
 }
 
 # Add a circle
@@ -167,27 +177,6 @@ sub _add {
 
 1;
 __END__
-
-
-=item * kml
-
-Access to the L<Geo::GoogleEarth::Pluggable> document.
-
-Get KML
-
-  $circles->kml->render;
-
-Get KMZ
-
-  $circles->kml->archive;
-
-Print KML HTTP header
-
-  $circles->kml->header;
-
-Print KMZ HTTP header
-
-  $circles->kml->header_kmz;
 
 =back
 

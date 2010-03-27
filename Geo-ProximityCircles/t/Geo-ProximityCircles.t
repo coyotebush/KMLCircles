@@ -34,5 +34,5 @@ is ($x->radius, 0.23, 'custom radius');
 # Test that color is included properly in output
 my $color = {red => 122, green => 34, blue => 91, alpha => 201};
 $x->color($color);
-like($x->kml, qr/c95b227a/i, "hex color in KML");
+like($x->render, qr/c95b227a/i, "hex color in KML");
 

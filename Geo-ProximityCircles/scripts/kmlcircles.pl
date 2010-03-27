@@ -28,7 +28,7 @@ while (my $gpx_file = shift) {
 
 # Output file
 open(my $kml, '>', $output_file);
-print $kml $circles->kml;
+print $kml $circles->render;
 close($kml);
 
 __END__
