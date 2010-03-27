@@ -78,8 +78,8 @@ sub read {
 	my $self = shift;
 	my $fh = shift;
 	my $gpx = Geo::Gpx->new(input => $fh);
-	for my $wpt ($gpx->waypoints()) {
-		$self->_add($wpt->{lat}, $wpt->{lon}, $wpt->{name});
+	foreach my $wpt ($gpx->waypoints()) {
+		$self->_add($wpt->[0]{'lat'}, $wpt->[0]{'lon'}, $wpt->[0]{'name'});
 	}
 }
 
