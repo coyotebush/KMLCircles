@@ -11,6 +11,8 @@ use Geo::Gpx;
 use constant ANGLESTEP   => pi/10;     # in radians
 use constant EARTHRADIUS => 3963.1676; # in miles
 
+our $VERSION = '0.01';
+
 =head1 NAME
 
 Geo::ProximityCircles - generate circles around waypoints
@@ -35,27 +37,6 @@ restrictions, for instance in geocaching (L<http://www.geocaching.com/>).
 =over 4
 
 =cut
-
-#our @ISA = qw(Exporter);
-
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-
-# This allows declaration	use Geo::ProximityCircles ':all';
-# If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
-# will save memory.
-our %EXPORT_TAGS = ( 'all' => [ qw(
-	
-) ] );
-
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
-our @EXPORT = qw(
-	
-);
-
-our $VERSION = '0.01';
 
 =item * new
 
