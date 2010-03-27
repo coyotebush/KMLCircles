@@ -53,7 +53,7 @@ sub new {
 	my $class = shift;
 	# Default values
 	my $self = {
-		_radius => 0.1,
+		_radius => 2.52323419e-5,
 		_kml => Geo::GoogleEarth::Pluggable->new(name => 'ProximityCircles'),
 	};
 	bless $self, $class;
@@ -119,9 +119,9 @@ sub radius {
 	my $self = shift;
 	my $newval = shift;
 	if (defined $newval) {
-		$self->{'_radius'} = $newval;
+		$self->{'_radius'} = $newval/EARTHRADIUS;
 	}
-	return $self->{'_radius'};
+	return $self->{'_radius'}*EARTHRADIUS;
 }
 
 sub kml {
