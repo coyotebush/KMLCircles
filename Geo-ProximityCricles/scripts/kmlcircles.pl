@@ -17,7 +17,7 @@ my $circles = new Geo::ProximityCircles;
 
 # Optional arguments
 $circles->radius($options{r}) if defined $options{r};
-$circles->color($options{c}) if defined $options{c};
+$circles->color('99'.reverse($options{c})) if defined $options{c};
 
 # Load GPX files
 while (my $gpx_file = shift) {
