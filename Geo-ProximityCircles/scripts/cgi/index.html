@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>KML proximity circles</title>
+		<style type="text/css">
+		/* <![CDATA[ */
+		label { display: block; }
+		/* ]]> */
+		</style>
+	</head>
+	<body>
+		<h1>KML proximity circles</h1>
+		<p>This tool will accept a GPX file containing waypoints.
+		It will then draw circles around the waypoints and give output
+		in a KML (Google Earth) file.
+		</p>
+		<form action="kmlcircles.cgi.pl" method="post" enctype="multipart/form-data">
+			<div>
+				<label for="gpxfile">Upload a GPX file
+					<input type="file" name="gpxfile" id="gpxfile" />
+				</label>
+				<label for="radius">Radius, in miles
+					<input type="text" name="radius" id="radius" size="4" maxlength="4" value="0.1" />
+				</label>
+				<label for="color">Color
+					<select name="color" id="color">
+						<option value="990000ff" selected="selected">Red</option>
+						<option value="9900ff00">Green</option>
+						<option value="99ff0000">Blue</option>
+						<option value="9900ffff">Yellow</option>
+						<option value="99ffff00">Cyan</option>
+						<option value="99ff00ff">Magenta</option>
+						<option value="99000000">Black</option>
+						<option value="99ffffff">White</option>
+					</select>
+				</label>
+				<br />
+				<input type="submit" value="Generate KML" />
+			</div>
+		</form>
+	</body>
+</html>
