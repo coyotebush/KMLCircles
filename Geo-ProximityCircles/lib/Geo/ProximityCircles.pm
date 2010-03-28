@@ -101,6 +101,7 @@ sub color {
 			$self->{'_style'}->{'PolyStyle'}->{'color'} = $newval;
 		} else {
 			$self->{'_style'} = $self->{'_kml'}->PolyStyle (color => $newval);
+			$self->{'_style'}->{'LineStyle'} = {width => 0};
 		}
 	}
 	return $self->{'_style'}->{'PolyStyle'}->{'color'};
