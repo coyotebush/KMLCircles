@@ -88,8 +88,8 @@ sub read {
 Circle color, as accepted by L<Geo::GoogleEarth::Pluggable::Style/color>.
 
   $circles->color('9900ff00'); # Default color
-  $circles->color({red => 0, green => 255, blue => 0, alpha => 153}); # Same
   $circles->color; # => '9900ff00'
+  $circles->color({red => 0, green => 255, blue => 0, alpha => 153}); # Same color
 
 =cut
 
