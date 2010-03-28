@@ -166,7 +166,7 @@ sub _add {
 		$angle += ANGLESTEP;
 		my ($thetad, $phid, $dird) = great_circle_destination
 			($theta, $phi, $angle, $self->{_radius});
-		push(@points, [rad2deg($thetad), rad2deg($phid), 0]);
+		push(@points, {lat => rad2deg($phid), lon => rad2deg($thetad)});
 	} while ($angle <= pi2);
 	$self->{'_kml'}->LinearRing(
 		name => $name,
