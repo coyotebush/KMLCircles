@@ -3,3 +3,7 @@ MANIFEST
 README
 t/Geo-ProximityCircles.t
 lib/Geo/ProximityCircles.pm
+scripts/kmlcircles.pl
+scripts/cgi/kmlcircles.cgi.pl
+scripts/cgi/index.html
+scripts/cgi/favicon.ico
