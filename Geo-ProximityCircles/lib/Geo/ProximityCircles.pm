@@ -99,9 +99,10 @@ sub color {
 	if (defined $newval) {
 		if (defined $self->{'_style'}) {
 			$self->{'_style'}->{'PolyStyle'}->{'color'} = $newval;
+			$self->{'_style'}->{'LineStyle'}->{'color'} = $newval;
 		} else {
 			$self->{'_style'} = $self->{'_kml'}->PolyStyle (color => $newval);
-			$self->{'_style'}->{'LineStyle'} = {width => 0};
+			$self->{'_style'}->{'LineStyle'} = {width => 5, color => $newval};
 		}
 	}
 	return $self->{'_style'}->{'PolyStyle'}->{'color'};
